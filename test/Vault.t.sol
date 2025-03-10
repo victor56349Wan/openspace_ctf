@@ -10,9 +10,10 @@ import "../src/Vault.sol";
 contract VaultExploiter is Test {
     Vault public vault;
     VaultLogic public logic;
-
+    AttackVault  public attacker;
     address owner = address (1);
     address palyer = address (2);
+    
 
     function setUp() public {
         vm.deal(owner, 1 ether);
@@ -21,7 +22,7 @@ contract VaultExploiter is Test {
         logic = new VaultLogic(bytes32("0x1234"));
         vault = new Vault(address(logic));
 
-        vault.deposite{value: 0.1 ether}();
+        vault.deposit{value: 0.1 ether}();
         vm.stopPrank();
 
     }
@@ -29,6 +30,9 @@ contract VaultExploiter is Test {
     function testExploit() public {
         vm.deal(palyer, 1 ether);
         vm.startPrank(palyer);
+        attacker = new AttackVault(vault, logic);
+        attacker.attack{value: 0.05 ether}();
+        vm.stopPrank();
 
         // add your hacker code.
 

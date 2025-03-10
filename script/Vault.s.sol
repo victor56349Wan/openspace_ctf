@@ -22,7 +22,7 @@ contract VaultScript is Script {
         Vault vault = new Vault(address(logic));
         console2.log("Vault deployed on %s", address(vault));
 
-        vault.deposite{value: 0.1 ether}();
+        vault.deposit{value: 0.1 ether}();
         vm.stopBroadcast();
 
 
